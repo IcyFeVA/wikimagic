@@ -1,3 +1,4 @@
+import 'package:WikiMagic/services/auth.dart';
 import 'package:flutter/material.dart';
 
 
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -50,6 +51,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  final AuthService _auth = AuthService();
 
   void _incrementCounter() {
     setState(() {
@@ -96,13 +98,10 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+            ElevatedButton(onPressed: () async {
+              dynamic result = await _auth.signInWithEmailAndPassword('hi@icyfeva.com', 'Marsmx23');
+              print('fantastic ${result}');
+            }, child: Text('Sign in')),
           ],
         ),
       ),
