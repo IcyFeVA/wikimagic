@@ -85,10 +85,12 @@ class UserInformation extends StatefulWidget {
 }
 
 class _UserInformationState extends State<UserInformation> {
-  final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance.collection('users').snapshots();
+  final String email = 'hi@icyfeva.com';
 
   @override
   Widget build(BuildContext context) {
+    final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance.collection('users').where('email', isEqualTo: email).snapshots();
+
     return StreamBuilder<QuerySnapshot>(
       stream: _usersStream,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -100,15 +102,7 @@ class _UserInformationState extends State<UserInformation> {
           return Text("Loading");
         }
 
-        return ListView(
-          children: snapshot.data!.docs.map((DocumentSnapshot document) {
-            Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-            return ListTile(
-              title: Text(data['searches']),
-              subtitle: Text(data['selections']),
-            );
-          }).toList(),
-        );
+        return Text(snapshot.data!.docs.first.get('searches'));
       },
     );
   }
