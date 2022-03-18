@@ -1,10 +1,14 @@
-import 'package:WikiMagic/services/auth.dart';
-import 'package:WikiMagic/services/database.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -34,8 +38,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final String _uid = '2JWtsBxIVtNrbeAOkJTrYbX0vL93';
-  final AuthService _auth = AuthService();
-  final Stream<QuerySnapshot> users = Firestore.instance.collection('users').where('uid', isEqualTo: '2JWtsBxIVtNrbeAOkJTrYbX0vL93').snapshots();
+  //final Stream<QuerySnapshot> users = Firestore.instance.collection('users').where('uid', isEqualTo: '2JWtsBxIVtNrbeAOkJTrYbX0vL93').snapshots();
+
+  //FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -56,28 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Container(
               height: 250,
               padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
-              child: StreamBuilder<QuerySnapshot>(
-                stream: users,
-                builder: (
-                  BuildContext context,
-                  AsyncSnapshot<QuerySnapshot> snapshot,
-                ) {
-                  if (snapshot.hasError) {
-                    return Text('Something went wrong. Snapshot Error.');
-                  }
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Text('loading...');
-                  }
-
-                  final data = snapshot.requireData;
-                  return ListView.builder(
-                    itemCount: data.documents.length,
-                    itemBuilder: (context, index) {
-                      return Text(data.documents[index]['searches']);
-                    },
-                  );
-                },
-              ),
+              child: UserInformation(),
             ),
           ],
         ),
@@ -87,6 +74,42 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+
+class UserInformation extends StatefulWidget {
+  @override
+  _UserInformationState createState() => _UserInformationState();
+}
+
+class _UserInformationState extends State<UserInformation> {
+  final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance.collection('users').snapshots();
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: _usersStream,
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text('Something went wrong');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Text("Loading");
+        }
+
+        return ListView(
+          children: snapshot.data!.docs.map((DocumentSnapshot document) {
+            Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+            return ListTile(
+              title: Text(data['searches']),
+              subtitle: Text(data['selections']),
+            );
+          }).toList(),
+        );
+      },
     );
   }
 }
