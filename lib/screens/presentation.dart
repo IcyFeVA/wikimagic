@@ -12,7 +12,7 @@ class Presentation extends StatefulWidget {
 class _PresentationState extends State<Presentation> {
   SharedPreferences? preferences;
   Stream<QuerySnapshot>? usersStream;
-  String? email;
+  String? uid;
 
   @override
   void initState() {
@@ -23,20 +23,15 @@ class _PresentationState extends State<Presentation> {
 
   Future init() async {
     preferences = await SharedPreferences.getInstance();
-    email = preferences?.getString('email') ?? 'hi@icyfeva.com';
-    //email = preferences?.getString('email') ?? 'hi@icyfeva.com';
-    //usersStream = FirebaseFirestore.instance.collection('users').where('email', isEqualTo: email).snapshots();
+    uid = preferences?.getString('uid') ?? 'R3RCBb11uFUiBhi1ZeRK';
   }
 
   @override
   Widget build(BuildContext context) {
-    Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance
-        .collection('users')
-        .where('email', isEqualTo: email)
-        .snapshots();
+    Stream<DocumentSnapshot> _usersStream = FirebaseFirestore.instance.collection('users').doc(uid).snapshots();
 
     return DefaultTextStyle(
-      style: Theme.of(context).textTheme.headline2!,
+      style: Theme.of(context).textTheme.displaySmall!,
       textAlign: TextAlign.center,
       child: StreamBuilder(
         stream: _usersStream,
@@ -47,11 +42,11 @@ class _PresentationState extends State<Presentation> {
               const Icon(
                 Icons.check_circle_outline,
                 color: Colors.green,
-                size: 60,
+                size: 20,
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 16),
-                child: Text(snapshot.data.docs[0]['searches'],
+                child: Text(snapshot.data.get('selections'),
                     style: const TextStyle(color: Colors.white)),
               )
             ];
@@ -60,23 +55,23 @@ class _PresentationState extends State<Presentation> {
               const Icon(
                 Icons.error_outline,
                 color: Colors.red,
-                size: 60,
+                size: 20,
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 16),
-                child: Text('Error: ${snapshot.error}'),
+                child: Text('Error: ${snapshot.error}', style: const TextStyle(color: Colors.white)),
               )
             ];
           } else {
             children = const <Widget>[
               SizedBox(
-                width: 60,
-                height: 60,
+                width: 20,
+                height: 20,
                 child: CircularProgressIndicator(),
               ),
               Padding(
                 padding: EdgeInsets.only(top: 16),
-                child: Text('Awaiting result...'),
+                child: Text('fetching...', style: TextStyle(color: Colors.white)),
               )
             ];
           }
