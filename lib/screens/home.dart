@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../services/auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -10,6 +11,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final AuthService _auth = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,9 +30,9 @@ class _HomeState extends State<Home> {
           children: <Widget>[
             ElevatedButton(
                 onPressed: () async {
-                  print('fantastic');
+                  _auth.signOut();
                 },
-                child: const Text('Sign in')
+                child: const Text('Sign out')
             ),
           ],
         ),

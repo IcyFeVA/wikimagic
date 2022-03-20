@@ -1,5 +1,6 @@
 import '../services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -16,7 +17,7 @@ class _SignInState extends State<SignIn> {
       backgroundColor: Colors.brown[100],
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-        child: RaisedButton(
+        child: ElevatedButton(
           child: Text('sign in anon'),
           onPressed: () async {
             dynamic result = await _auth.signInAnon();

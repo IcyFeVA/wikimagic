@@ -1,31 +1,32 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import '../models/myuser.dart';
 
 class AuthService {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  // create user obj based on firebase user
-  MyUser _userFromFirebaseUser(User? user) {
-    return MyUser(uid: user?.uid);
-  }
+  Stream<User?> get onAuthStateChanged => _firebaseAuth.authStateChanges();
 
   // sign in anon
   Future signInAnon() async {
     try {
-      UserCredential result = await _auth.signInAnonymously();
-      return _userFromFirebaseUser(result.user);
+      UserCredential result = await _firebaseAuth.signInAnonymously();
+      return result.user;
     } catch (e) {
       print(e.toString());
       return null;
     }
   }
 
-// sign in with email and password
+  Future signOut() async {
+    try {
+      return await _firebaseAuth.signOut();
+    } catch (error) {
+      print(error.toString());
+      return null;
+    }
+  }
 
-
-// register with email and password
-
-// sign out
-
+  // GET UID
+  Future<String> getCurrentUID() async {
+    return _firebaseAuth.currentUser!.uid;
+  }
 }
