@@ -1,15 +1,16 @@
+import 'package:WikiMagic/screens/sign_in.dart';
 import 'package:flutter/material.dart';
 
-class SignIn extends StatefulWidget {
-  const SignIn({Key? key}) : super(key: key);
-
+class Authenticate extends StatefulWidget {
   @override
-  State<SignIn> createState() => _SignInState();
+  _AuthenticateState createState() => _AuthenticateState();
 }
 
-class _SignInState extends State<SignIn> {
+class _AuthenticateState extends State<Authenticate> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      child: SignIn(),
+    );
   }
 }
