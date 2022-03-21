@@ -1,11 +1,13 @@
+import 'dart:async';
+
+import 'package:WikiMagic/screens/perform.dart';
 import 'package:WikiMagic/screens/home.dart';
-import 'package:WikiMagic/screens/sign_in.dart';
 import 'package:WikiMagic/services/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 import 'firebase_options.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'screens/wrapper.dart';
 import 'services/auth_provider.dart';
 import 'services/auth.dart';
 
@@ -15,8 +17,10 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+
   final prefs = await SharedPreferences.getInstance();
-  final showHome = prefs.getBool('showHome') ?? false;
+  final test = prefs.getBool('showHome') ?? false;
 
   runApp(MyApp());
 }
@@ -52,14 +56,13 @@ class HomeController extends StatelessWidget {
       builder: (context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
           final bool signedIn = snapshot.hasData;
-          return signedIn ? Home() : SignIn();
+          return signedIn ? Perform() : Home();
         }
-        return Container(
-          color: Colors.green
-        );
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        }
+        return const Text('Something weird is going on');
       },
     );
   }
 }
-
-

@@ -1,14 +1,9 @@
-import 'package:flutter/material.dart';
 import '../services/auth.dart';
-import 'perform.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
-
   @override
-  State<Home> createState() => _HomeState();
+  _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
@@ -16,36 +11,38 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              margin: const EdgeInsets.only(bottom: 30.0),
-              child: const Text(
-                'www.wikimagic.net/3hdi',
-                style: TextStyle(
-                    color: Colors.yellow,
-                    fontSize: 14,
-                    decoration: TextDecoration.none),
-              ),
+    return Scaffold(
+      backgroundColor: Colors.blueGrey[900],
+      body: SafeArea(
+        child: Container(
+          padding: const EdgeInsets.all(24),
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  child: const Text('Tutorial'),
+                  onPressed: () async {},
+                ),
+                ElevatedButton(
+                  child: const Text('Settings'),
+                  onPressed: () async {},
+                ),
+                ElevatedButton(
+                  child: const Text('Perform'),
+                  onPressed: () async {
+                    dynamic result = await _auth.signInAnon();
+                    if (result == null) {
+                      print('error signing in');
+                    } else {
+                      print('signed in');
+                      print(result.uid);
+                    }
+                  },
+                ),
+              ],
             ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Perform()),
-                );
-              },
-              child: const Text('Display Lockscreen'),
-            ),
-            ElevatedButton(
-                onPressed: () async {
-                  _auth.signOut();
-                },
-                child: const Text('End Session')),
-          ],
+          ),
         ),
       ),
     );
