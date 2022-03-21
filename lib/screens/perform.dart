@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/auth.dart';
 import 'package:animations/animations.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'perform_display.dart';
 
 class Perform extends StatefulWidget {
   const Perform({Key? key}) : super(key: key);
@@ -51,28 +51,6 @@ class _PerformState extends State<Perform> {
     );
   }
 
-  Widget PerformDisplay() {
-    return Scaffold(
-      backgroundColor: Colors.blueGrey[700],
-      body: GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        onDoubleTap: () {
-          _togglePerformStatus();
-          //Navigator.pop(context);
-        },
-        child: SafeArea(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const <Widget>[
-                Text('Hello'),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +77,7 @@ class _PerformState extends State<Perform> {
                       transitionType: _transitionType!,
                     );
                   },
-                  child: _isPerforming ? PerformDisplay() : PerformHome(),
+                  child: _isPerforming ? PerformDisplay(toggle: _togglePerformStatus) : PerformHome(),
                 ),
               )
             ],
