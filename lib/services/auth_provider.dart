@@ -10,7 +10,7 @@ class Provider extends InheritedWidget {
   }) : super(key: key, child: child);
 
   @override
-  bool updateShouldNotify(InheritedWidget oldWiddget) {
+  bool updateShouldNotify(InheritedWidget oldWidget) {
     return true;
   }
 

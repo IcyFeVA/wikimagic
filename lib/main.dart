@@ -55,7 +55,7 @@ class HomeController extends StatelessWidget {
           return signedIn ? Home() : SignIn();
         }
         return Container(
-          color: Colors.black,
+          color: Colors.green
         );
       },
     );
