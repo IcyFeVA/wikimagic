@@ -1,3 +1,5 @@
+import 'package:provider/provider.dart';
+import '../models/user.dart';
 import '../services/auth.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +37,6 @@ class _HomeState extends State<Home> {
                     if (result == null) {
                       print('error signing in');
                     } else {
-                      print('signed in');
                       print(result.uid);
                     }
                   },
