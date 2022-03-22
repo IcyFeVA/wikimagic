@@ -8,10 +8,12 @@
 
 import 'package:flutter/material.dart';
 
-class MyUser with ChangeNotifier {
-  final String? uid;
-
-  get theid => uid;
-
-  MyUser({this.uid});
-}
+// class MyUser with ChangeNotifier {
+//   String? _uid;
+//   get uid => _uid;
+//
+//   void setID(String newID) {
+//     _uid = newID;
+//     notifyListeners();
+//   }
+// }

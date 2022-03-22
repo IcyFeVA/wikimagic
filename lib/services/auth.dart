@@ -1,5 +1,7 @@
 import 'package:WikiMagic/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+import '../helpers/helpers.dart';
 import '../models/user.dart';
 
 class AuthService {
@@ -8,17 +10,15 @@ class AuthService {
   Stream<User?> get user => _firebaseAuth.authStateChanges();
 
 
-  MyUser? _userFromFirebaseUser(User user) {
-    return user != null ? MyUser(uid: user.uid) : null;
-  }
+  // MyUser? _userFromFirebaseUser(User user) {
+  //   return user != null ? MyUser(uid: user.uid) : null;
+  // }
 
   // sign in anon
   Future signInAnon() async {
     try {
       UserCredential result = await _firebaseAuth.signInAnonymously();
       User user = result.user!;
-
-      await DatabaseService(uid: user.uid).updateUserData('-', '-');
 
       //return _userFromFirebaseUser(user);
       return user;
@@ -35,6 +35,10 @@ class AuthService {
       print(error.toString());
       return null;
     }
+  }
+
+  Future setupUserData(String userID, String userPageID) async {
+    await DatabaseService(uid: userID).updateUserData('-', '-', userPageID);
   }
 
   // GET UID

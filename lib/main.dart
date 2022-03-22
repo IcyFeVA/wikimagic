@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:WikiMagic/screens/perform.dart';
 import 'package:WikiMagic/screens/home.dart';
-import 'package:WikiMagic/services/auth_provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
@@ -11,7 +9,8 @@ import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'models/user.dart';
-import 'services/auth.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:WikiMagic/helpers/helpers.dart';
 
 
 
@@ -25,59 +24,18 @@ void main() async {
 
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
-  final prefs = await SharedPreferences.getInstance();
-  final test = prefs.getBool('showHome') ?? false;
+  // final prefs = await SharedPreferences.getInstance();
+  // final test = prefs.getBool('showHome') ?? false;
 
   runApp(MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => Counter()),
-        ChangeNotifierProvider(create: (_) => MyUser())
+        ChangeNotifierProvider(create: (_) => UserPageID()),
+        ChangeNotifierProvider(create: (_) => MyUser()),
+        ChangeNotifierProvider(create: (_) => MySearchTerm()),
+        ChangeNotifierProvider(create: (_) => MySelection()),
       ],
       child: MyApp()));
 }
-
-
-class Counter with ChangeNotifier {
-  int _count = 0;
-
-  int get count => _count;
-
-  void increment() {
-    _count++;
-    notifyListeners();
-  }
-}
-
-
-class Wrapper extends StatelessWidget {
-  const Wrapper({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: AuthService().user,
-      builder: (context, AsyncSnapshot snapshot) {
-        if (snapshot.connectionState == ConnectionState.active) {
-          final bool signedIn = snapshot.hasData;
-          if(signedIn) {
-            return Perform();
-          } else {
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(builder: (context) => Home()),
-            // );
-            return Home();
-          }
-        }
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
-        }
-        return const Text('Something weird is going on');
-      },
-    );
-  }
-}
-
 
 
 class MyApp extends StatelessWidget {
@@ -85,31 +43,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final User user = Provider.of<User>(context);
-    //final AuthService user = Provider.of<AuthService>(context);
-    //final AuthService auth = Provider.of<AuthService>(context);
-
-    // return StreamBuilder(
-    //   stream: auth.user,
-    //   builder: (context, AsyncSnapshot snapshot) {
-    //     if (snapshot.connectionState == ConnectionState.active) {
-    //       final bool signedIn = snapshot.hasData;
-    //       return signedIn ? Perform() : Home();
-    //     }
-    //     if (snapshot.connectionState == ConnectionState.waiting) {
-    //       return const CircularProgressIndicator();
-    //     }
-    //     return const Text('Something weird is going on');
-    //   },
-    // );
-
     return MaterialApp(
       initialRoute: '/',
       routes: <String, WidgetBuilder>{
-        '/': (context) => const Wrapper(),
-        '/home': (context) => Home(),
-        '/perform': (context) => const Perform()
+        '/perform': (context) => Perform()
       },
+      home: Home(),
+      theme: ThemeData(
+        scaffoldBackgroundColor: const Color(0xFF291F38),
+        canvasColor: const Color(0xFF291F38),
+        backgroundColor: const Color(0xFF291F38),
+        primaryColor: const Color(0xFF5E41D4),
+        textTheme: GoogleFonts.poppinsTextTheme(
+          Theme.of(context).textTheme, // If this is not set, then ThemeData.light().textTheme is used.
+        ),
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.deepPurple).copyWith(secondary: Colors.white),
+      ),
     );
 
   }

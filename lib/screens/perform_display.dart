@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:WikiMagic/helpers/helpers.dart';
+import 'package:provider/provider.dart';
 
 class PerformDisplay extends StatefulWidget {
   final Function? toggle;
@@ -13,7 +15,6 @@ class _PerformDisplayState extends State<PerformDisplay> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey[700],
       body: GestureDetector(
         behavior: HitTestBehavior.translucent,
         onDoubleTap: () {
@@ -25,8 +26,9 @@ class _PerformDisplayState extends State<PerformDisplay> {
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const <Widget>[
-                Text('hello world'),
+              children: <Widget>[
+                Text('${context.read<MySearchTerm>().searchterm}'),
+                Text('${context.read<MySelection>().selection}'),
               ],
             ),
           ),

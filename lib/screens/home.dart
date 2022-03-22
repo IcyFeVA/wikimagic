@@ -1,7 +1,10 @@
+import 'package:WikiMagic/services/database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import '../models/user.dart';
 import '../services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:WikiMagic/helpers/helpers.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -10,11 +13,12 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
+  final DatabaseService _db = DatabaseService();
+  bool showLoader = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey[900],
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.all(24),
@@ -23,24 +27,37 @@ class _HomeState extends State<Home> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  child: const Text('Tutorial'),
+                  child: const Text('TUTORIAL'),
                   onPressed: () async {},
                 ),
                 ElevatedButton(
-                  child: const Text('Settings'),
+                  child: const Text('SETTINGS'),
                   onPressed: () async {},
                 ),
                 ElevatedButton(
-                  child: const Text('Perform'),
+                  child: Text('CONNECT'),
                   onPressed: () async {
+                    setState(() {
+                      showLoader = true;
+                    });
                     dynamic result = await _auth.signInAnon();
                     if (result == null) {
                       print('error signing in');
                     } else {
-                      print(result.uid);
+                      setState(() {
+                        showLoader = false;
+                      });
+                      context.read<MyUser>().setID(result.uid);
+
+                      String userPageID = generateRandomString(3);
+                      context.read<UserPageID>().setID(userPageID);
+                      _db.updateUserData('-', '-', userPageID);
+
+                      Navigator.pushNamed(context, '/perform');
                     }
                   },
                 ),
+                Visibility(child: CircularProgressIndicator(), visible: showLoader),
               ],
             ),
           ),
