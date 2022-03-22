@@ -13,7 +13,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
-  final DatabaseService _db = DatabaseService();
+  DatabaseService? db;
   bool showLoader = false;
 
   @override
@@ -51,7 +51,8 @@ class _HomeState extends State<Home> {
 
                       String userPageID = generateRandomString(3);
                       context.read<UserPageID>().setID(userPageID);
-                      _db.updateUserData('-', '-', userPageID);
+
+                      DatabaseService(uid: result.uid).updateUserData('-', '-', userPageID);
 
                       Navigator.pushNamed(context, '/perform');
                     }
