@@ -17,22 +17,34 @@ class PerformDisplay extends StatefulWidget {
 }
 
 class _PerformDisplayState extends State<PerformDisplay> {
+  late DateTime _initialTime;
+  late final Timer _timer;
+  var hours = DateFormat("hh").format(DateTime.now());
+  var minutes = DateFormat("mm").format(DateTime.now());
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(Duration(seconds: 5), (_) {
+      setState(() {
+        hours = DateFormat("hh").format(DateTime.now());
+        minutes = DateFormat("mm").format(DateTime.now());
+      });
+    });
+  }
+
+
+  @override
+  void dispose() {
+    // 5. don't forget to cancel the timer
+    _timer.cancel();
+    super.dispose();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<MyUser>(context);
-    var hours = DateFormat("hh").format(DateTime.now());
-    var minutes = DateFormat("mm").format(DateTime.now());
-
-    var timeRefresher;
-    if (timeRefresher == null) {
-      timeRefresher = Timer.periodic(const Duration(seconds: 1), (timer) {
-        print('hi');
-        // setState(() {
-        //   hours = DateFormat("hh").format(DateTime.now());
-        //   minutes = DateFormat("mm").format(DateTime.now());
-        // });
-      });
-    }
 
     return StreamBuilder<DocumentSnapshot>(
         stream: DatabaseService(uid: user.uid).userData,
@@ -56,7 +68,6 @@ class _PerformDisplayState extends State<PerformDisplay> {
                 behavior: HitTestBehavior.translucent,
                 onDoubleTap: () {
                   if (widget.toggle != null) {
-                    timeRefresher.cancel();
                     widget.toggle!();
                   }
                 },
