@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:WikiMagic/services/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
@@ -18,6 +20,19 @@ class _PerformDisplayState extends State<PerformDisplay> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<MyUser>(context);
+    var hours = DateFormat("hh").format(DateTime.now());
+    var minutes = DateFormat("mm").format(DateTime.now());
+
+    var timeRefresher;
+    if (timeRefresher == null) {
+      timeRefresher = Timer.periodic(const Duration(seconds: 1), (timer) {
+        print('hi');
+        // setState(() {
+        //   hours = DateFormat("hh").format(DateTime.now());
+        //   minutes = DateFormat("mm").format(DateTime.now());
+        // });
+      });
+    }
 
     return StreamBuilder<DocumentSnapshot>(
         stream: DatabaseService(uid: user.uid).userData,
@@ -41,6 +56,7 @@ class _PerformDisplayState extends State<PerformDisplay> {
                 behavior: HitTestBehavior.translucent,
                 onDoubleTap: () {
                   if (widget.toggle != null) {
+                    timeRefresher.cancel();
                     widget.toggle!();
                   }
                 },
@@ -54,32 +70,30 @@ class _PerformDisplayState extends State<PerformDisplay> {
                           Column(
                             children: <Widget>[
                               Container(
-                                child: Text(
-                                    DateFormat("hh").format(DateTime.now()),
+                                child: Text(hours,
                                     style: TextStyle(
-                                        color: Colors.white10,
+                                        color: Color(0xFF929292),
                                         fontSize: 80,
                                         fontFamily: 'Roboto')),
                               ),
                               Container(
                                 margin: EdgeInsets.only(bottom: 80.0),
-                                child: Text(
-                                    DateFormat("mm").format(DateTime.now()),
+                                child: Text(minutes,
                                     style: TextStyle(
                                         height: 0.8,
-                                        color: Colors.white10,
+                                        color: Color(0xFF929292),
                                         fontSize: 80,
                                         fontFamily: 'Roboto')),
                               ),
                             ],
                           ),
-                          Icon(Icons.alarm, color: Colors.white10, size: 22),
+                          Icon(Icons.alarm, color: Color(0xFF4E4E4E), size: 22),
                           Text(txt1,
                               style: TextStyle(
-                                  color: Colors.white10, height: 1.7)),
+                                  color: Color(0xFF4E4E4E), height: 1.7)),
                           Text(txt2,
                               style: TextStyle(
-                                  color: Colors.white10, fontSize: 12)),
+                                  color: Color(0xFF4E4E4E), fontSize: 12)),
                         ],
                       ),
                     ),
