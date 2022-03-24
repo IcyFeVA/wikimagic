@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
       },
       home: Home(),
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0xFF291F38),
+        scaffoldBackgroundColor: const Color(0xFF2A1E36),
         canvasColor: const Color(0xFF291F38),
         backgroundColor: const Color(0xFF291F38),
         primaryColor: const Color(0xFF5E41D4),

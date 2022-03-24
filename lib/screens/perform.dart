@@ -96,8 +96,10 @@ class _PerformState extends State<Perform> {
                   _togglePerformStatus();
                 },
                 child: const Text('FAKE ALWAYS ON DISPLAY'),
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(300, 50),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF5E41D4)),
+                  minimumSize:
+                  MaterialStateProperty.all(Size(300, 50)),
                 ),
               ),
             ),
@@ -108,8 +110,10 @@ class _PerformState extends State<Perform> {
                 child: ElevatedButton(
                   onPressed: () {},
                   child: const Text('BLACK SCREEN (SOON)'),
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: Size(300, 50),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF5E41D4)),
+                    minimumSize:
+                    MaterialStateProperty.all(Size(300, 50)),
                   ),
                 ),
               ),
@@ -121,8 +125,10 @@ class _PerformState extends State<Perform> {
                 child: ElevatedButton(
                   onPressed: () {},
                   child: const Text('PEEKSMITH (MAYBE SOON)'),
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: Size(300, 50),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF5E41D4)),
+                    minimumSize:
+                    MaterialStateProperty.all(Size(300, 50)),
                   ),
                 ),
               ),
