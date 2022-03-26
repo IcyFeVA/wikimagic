@@ -70,12 +70,29 @@ class _HomeState extends State<Home> {
                           margin: const EdgeInsets.only(bottom: 16.0),
                           child: ElevatedButton(
                             child: const Text('HOW IT WORKS'),
-                            onPressed: () async {},
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/howitworks');
+                            },
                             style: ButtonStyle(
                               minimumSize:
                                   MaterialStateProperty.all(Size(300, 50)),
                               backgroundColor:
                                   MaterialStateProperty.all(Color(0xFF372A43)),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 16.0),
+                          child: ElevatedButton(
+                            child: const Text('PERFORMANCE TIPS'),
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/howtoperform');
+                            },
+                            style: ButtonStyle(
+                              minimumSize:
+                              MaterialStateProperty.all(Size(300, 50)),
+                              backgroundColor:
+                              MaterialStateProperty.all(Color(0xFF372A43)),
                             ),
                           ),
                         ),

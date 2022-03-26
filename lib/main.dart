@@ -11,6 +11,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'models/user.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:WikiMagic/helpers/helpers.dart';
+import 'package:WikiMagic/screens/howtoperform.dart';
+import 'package:WikiMagic/screens/howitworks.dart';
 
 
 
@@ -47,7 +49,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: <String, WidgetBuilder>{
-        '/perform': (context) => Perform()
+        '/perform': (context) => Perform(),
+        '/howitworks': (context) => HowItWorks(),
+        '/howtoperform': (context) => HowToPerform()
       },
       home: Home(),
       theme: ThemeData(
