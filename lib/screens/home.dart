@@ -8,6 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:WikiMagic/helpers/helpers.dart';
 import 'package:rive/rive.dart';
 
+const String VERSION = "Version 1.0";
+
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -35,6 +38,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -56,37 +60,9 @@ class _HomeState extends State<Home> {
                         Container(
                           margin: const EdgeInsets.only(bottom: 16.0),
                           child: ElevatedButton(
-                            child: const Text('PRESENATATION'),
-                            onPressed: () async {},
-                            style: ButtonStyle(
-                              minimumSize:
-                                  MaterialStateProperty.all(Size(300, 50)),
-                              backgroundColor:
-                                  MaterialStateProperty.all(Color(0xFF372A43)),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 16.0),
-                          child: ElevatedButton(
                             child: const Text('HOW IT WORKS'),
                             onPressed: () {
                               Navigator.pushNamed(context, '/howitworks');
-                            },
-                            style: ButtonStyle(
-                              minimumSize:
-                                  MaterialStateProperty.all(Size(300, 50)),
-                              backgroundColor:
-                                  MaterialStateProperty.all(Color(0xFF372A43)),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 16.0),
-                          child: ElevatedButton(
-                            child: const Text('PERFORMANCE TIPS'),
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/howtoperform');
                             },
                             style: ButtonStyle(
                               minimumSize:
@@ -96,6 +72,21 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                         ),
+
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 16.0),
+                          child: ElevatedButton(
+                            child: const Text('PERFORMANCE PATTERN'),
+                            onPressed: () async {},
+                            style: ButtonStyle(
+                              minimumSize:
+                                  MaterialStateProperty.all(Size(300, 50)),
+                              backgroundColor:
+                                  MaterialStateProperty.all(Color(0xFF372A43)),
+                            ),
+                          ),
+                        ),
+
                         Container(
                           child: ElevatedButton(
                             child: Column(children: [
@@ -145,6 +136,17 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                         ),
+                        Container(
+                          padding: const EdgeInsets.only(top: 64),
+                          child: const Text(
+                            VERSION,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Color(0xFFBABABA),
+                                fontSize: 13,
+                                decoration: TextDecoration.none),
+                          ),
+                        )
                       ],
                     ),
                   ))

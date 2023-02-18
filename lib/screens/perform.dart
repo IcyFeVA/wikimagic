@@ -59,7 +59,7 @@ class _PerformState extends State<Perform> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Color(0xFFFFFFFF),
-                      fontSize: 14,
+                      fontSize: 16,
                       decoration: TextDecoration.none),
                 ),
               ),
@@ -67,11 +67,11 @@ class _PerformState extends State<Perform> {
             Container(
               margin: EdgeInsets.only(bottom: 128),
               child: Text(
-                'wiki.ae.org/' + Provider.of<UserPageID>(context).pageid,
+                'wima.app/' + Provider.of<UserPageID>(context).pageid,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Color(0xFF1FC4BA),
-                    fontSize: 14,
+                    fontSize: 13,
                     decoration: TextDecoration.none),
               ),
             ),
@@ -79,13 +79,25 @@ class _PerformState extends State<Perform> {
               margin: EdgeInsets.only(bottom: 20),
               child: Align(
                 alignment: Alignment.topCenter,
-                child: Text(
-                  'Display spectators thoughts on',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Color(0xFFFFFFFF),
-                      fontSize: 14,
-                      decoration: TextDecoration.none),
+                child: Column(
+                  children: const [
+                    Text(
+                      'Peek spectators thoughts',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Color(0xFFFFFFFF),
+                          fontSize: 16,
+                          decoration: TextDecoration.none),
+                    ),
+                    Text(
+                      '(Double-Tap to exit screen)',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Color(0xFFBABABA),
+                          fontSize: 13,
+                          decoration: TextDecoration.none),
+                    )
+                  ],
                 ),
               ),
             ),
@@ -95,11 +107,11 @@ class _PerformState extends State<Perform> {
                 onPressed: () {
                   _togglePerformStatus();
                 },
-                child: const Text('FAKE ALWAYS ON DISPLAY'),
+                child: const Text('ALWAYS ON DISPLAY'),
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF5E41D4)),
-                  minimumSize:
-                  MaterialStateProperty.all(Size(300, 50)),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Color(0xFF5E41D4)),
+                  minimumSize: MaterialStateProperty.all(Size(300, 50)),
                 ),
               ),
             ),
@@ -109,26 +121,11 @@ class _PerformState extends State<Perform> {
                 margin: const EdgeInsets.only(bottom: 16.0),
                 child: ElevatedButton(
                   onPressed: () {},
-                  child: const Text('BLACK SCREEN (SOON)'),
+                  child: const Text('BLACK SCREEN (soon)'),
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF5E41D4)),
-                    minimumSize:
-                    MaterialStateProperty.all(Size(300, 50)),
-                  ),
-                ),
-              ),
-            ),
-            Opacity(
-              opacity: 0.3,
-              child: Container(
-                margin: const EdgeInsets.only(bottom: 16.0),
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('PEEKSMITH (MAYBE SOON)'),
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF5E41D4)),
-                    minimumSize:
-                    MaterialStateProperty.all(Size(300, 50)),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Color(0xFF5E41D4)),
+                    minimumSize: MaterialStateProperty.all(Size(300, 50)),
                   ),
                 ),
               ),

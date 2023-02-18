@@ -170,14 +170,14 @@ class _HowToPerformState extends State<HowToPerform> {
               : const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
           dotsDecorator: const DotsDecorator(
             size: Size(10.0, 10.0),
-            color: Color(0xFFBDBDBD),
+            color: Color(0xFFFFFFFF),
             activeSize: Size(22.0, 10.0),
             activeShape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(5.0)),
             ),
           ),
           dotsContainerDecorator: const ShapeDecoration(
-            color: Color(0xFF372A43),
+            color: Color(0x002A1E36),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(8.0)),
             ),

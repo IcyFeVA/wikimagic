@@ -19,7 +19,7 @@ class _HowItWorksState extends State<HowItWorks> {
 
   Widget _buildFullscreenImage() {
     return Image.asset(
-      'assets/fullscreen.jpg',
+      'assets/images/logo.png',
       fit: BoxFit.cover,
       height: double.infinity,
       width: double.infinity,
@@ -33,7 +33,7 @@ class _HowItWorksState extends State<HowItWorks> {
 
   @override
   Widget build(BuildContext context) {
-    const bodyStyle = TextStyle(fontSize: 16.0, color: Colors.white);
+    const bodyStyle = TextStyle(fontSize: 14.0, color: Colors.white);
 
     const pageDecoration = const PageDecoration(
       titleTextStyle: TextStyle(
@@ -69,84 +69,43 @@ class _HowItWorksState extends State<HowItWorks> {
           globalFooter: Container(),
           pages: [
             PageViewModel(
-              title: "Technology man...",
+              title: "How it works",
               body:
-                  "Your spectator is searching something on a fake wikipedia website."
-                      " The search-term, as well as the selected Text are saved in a database on a webserver.\n\n"
-                      "You connect to the same webserver with this app and peek those two words on a fake 'always on display', or perhaps even"
-                      " something like Peeksmith (Device) in the future.",
+                  "When you click 'CONNECT & PERFORM' on the home screen, this app connects to a database in the cloud and returns a unique URL. \n\n"
+                      " If a spectator visits this particular URL with their phone, they will be presented with a fake wikipedia website. \n\n"
+                      " At the same time, their phone will be connected to that same database in the cloud.",
               image: _buildImage('images/logo.png'),
               decoration: pageDecoration,
             ),
             PageViewModel(
-              title: "More detailed",
+              title: "",
               body:
-                  "When you tap 'Connect & Perform' the app connects you to the database."
-                      " You will get logged in annonymously, "
-                      "and a unique url to the fake wikipedia page is generated."
-                      " You ask for the specators phone and type in the url to open up the fake wikipedia page.",
+                "If they search something, that search-term will be pushed to the database. The same goes for words they select. \n\n"
+                "At the same time, this app receives these words and displays them on the peek-screen of your choosing.",
               image: _buildImage('images/logo.png'),
               decoration: pageDecoration,
             ),
             PageViewModel(
-              title: "Kids and teens",
+              title: "",
               body:
-                  "Kids and teens can track their stocks 24/7 and place trades that you approve.",
-              image: _buildImage('images/logo.png'),
-              decoration: pageDecoration,
-            ),
-            PageViewModel(
-              title: "Full Screen Page",
-              body:
-                  "Pages can be full screen as well.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id euismod lectus, non tempor felis. Nam rutrum rhoncus est ac venenatis.",
-              image: _buildFullscreenImage(),
-              decoration: pageDecoration.copyWith(
-                contentMargin: const EdgeInsets.symmetric(horizontal: 16),
-                fullScreen: true,
-                bodyFlex: 2,
-                imageFlex: 3,
-              ),
-            ),
-            PageViewModel(
-              title: "Another title page",
-              body: "Another beautiful body text for this example onboarding",
+                "You can try this out yourself and once you get the hang of it, head on over the the 'PERFORMANCE PATTERN' section to learn how to perform this miracle.",
               image: _buildImage('images/logo.png'),
               footer: ElevatedButton(
+                child: const Text('TAKE ME THERE'),
                 onPressed: () {
-                  introKey.currentState?.animateScroll(0);
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/howtoperform');
                 },
-                child: const Text(
-                  'FooButton',
-                  style: TextStyle(color: Colors.white),
-                ),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.lightBlue,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
+                style: ButtonStyle(
+                  minimumSize:
+                  MaterialStateProperty.all(Size(300, 50)),
+                  backgroundColor:
+                  MaterialStateProperty.all(Color(0xFF372A43)),
                 ),
               ),
               decoration: pageDecoration,
             ),
-            PageViewModel(
-              title: "Title of last page - reversed",
-              bodyWidget: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text("Click on ", style: bodyStyle),
-                  Icon(Icons.edit),
-                  Text(" to edit a post", style: bodyStyle),
-                ],
-              ),
-              decoration: pageDecoration.copyWith(
-                bodyFlex: 2,
-                imageFlex: 4,
-                bodyAlignment: Alignment.bottomCenter,
-                imageAlignment: Alignment.topCenter,
-              ),
-              image: _buildImage('images/logo.png'),
-              reverse: true,
-            ),
+
           ],
           onDone: () => _onIntroEnd(context),
           //onSkip: () => _onIntroEnd(context), // You can override onSkip callback
@@ -176,14 +135,14 @@ class _HowItWorksState extends State<HowItWorks> {
               : const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
           dotsDecorator: const DotsDecorator(
             size: Size(10.0, 10.0),
-            color: Color(0xFFBDBDBD),
+            color: Color(0xFFFFFFFF),
             activeSize: Size(22.0, 10.0),
             activeShape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(5.0)),
             ),
           ),
           dotsContainerDecorator: const ShapeDecoration(
-            color: Color(0xFF372A43),
+            color: Color(0x002A1E36),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(8.0)),
             ),
