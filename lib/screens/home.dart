@@ -6,9 +6,8 @@ import 'package:provider/provider.dart';
 import '../services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:WikiMagic/helpers/helpers.dart';
-import 'package:rive/rive.dart';
 
-const String VERSION = "Version 1.0";
+const String VERSION = "0.7 Alpha";
 
 
 class Home extends StatefulWidget {
@@ -21,19 +20,9 @@ class _HomeState extends State<Home> {
   DatabaseService? db;
   bool showLoader = false;
 
-  late Artboard artboard;
-  late RiveAnimationController controller;
-
   @override
   void initState() {
     super.initState();
-    artboard = Artboard();
-    rootBundle.load("animations/gestures.riv").then((data) {
-      final file = RiveFile.import(data);
-      final artboard = file.mainArtboard;
-      artboard.addController(controller = SimpleAnimation("Double Tap"));
-      setState(() => this.artboard = artboard);
-    });
   }
 
   @override
@@ -42,19 +31,31 @@ class _HomeState extends State<Home> {
     return Scaffold(
       body: SafeArea(
         child: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xFF07080D),
+                Color(0xFF131523),
+                Color(0xFF07080D),
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            )
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
                 Container(
                   margin: EdgeInsets.only(top: 80),
-                  width: 232,
-                    height: 232,
+                  width: 140,
+                    height: 140,
                     child: Image.asset('assets/images/logo.png')),
               Align(
                   alignment: Alignment.bottomCenter,
                   child: Container(
-                    padding: const EdgeInsets.all(72),
+                    padding: const EdgeInsets.symmetric(horizontal: 72.0, vertical: 0.0),
+                    margin: const EdgeInsets.only(bottom: 80.0),
                     child: Column(
                       children: [
                         Container(
@@ -65,10 +66,11 @@ class _HomeState extends State<Home> {
                               Navigator.pushNamed(context, '/howitworks');
                             },
                             style: ButtonStyle(
+                              shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(4))),
                               minimumSize:
                               MaterialStateProperty.all(Size(300, 50)),
                               backgroundColor:
-                              MaterialStateProperty.all(Color(0xFF372A43)),
+                              MaterialStateProperty.all(Color(0xFF171B33)),
                             ),
                           ),
                         ),
@@ -82,7 +84,21 @@ class _HomeState extends State<Home> {
                               minimumSize:
                                   MaterialStateProperty.all(Size(300, 50)),
                               backgroundColor:
-                                  MaterialStateProperty.all(Color(0xFF372A43)),
+                              MaterialStateProperty.all(Color(0xFF171B33)),
+                            ),
+                          ),
+                        ),
+
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 16.0),
+                          child: ElevatedButton(
+                            child: const Text('SETTINGS'),
+                            onPressed: () async {},
+                            style: ButtonStyle(
+                              minimumSize:
+                              MaterialStateProperty.all(Size(300, 50)),
+                              backgroundColor:
+                              MaterialStateProperty.all(Color(0xFF171B33)),
                             ),
                           ),
                         ),

@@ -19,7 +19,7 @@ class _HowItWorksState extends State<HowItWorks> {
 
   Widget _buildFullscreenImage() {
     return Image.asset(
-      'assets/images/logo.png',
+      'assets/images/logo-darkend.png',
       fit: BoxFit.cover,
       height: double.infinity,
       width: double.infinity,
@@ -27,7 +27,7 @@ class _HowItWorksState extends State<HowItWorks> {
     );
   }
 
-  Widget _buildImage(String assetName, [double width = 350]) {
+  Widget _buildImage(String assetName, [double width = 200]) {
     return Image.asset('assets/$assetName', width: width);
   }
 
@@ -40,7 +40,6 @@ class _HowItWorksState extends State<HowItWorks> {
           fontSize: 22.0, fontWeight: FontWeight.w700, color: Colors.white),
       bodyTextStyle: bodyStyle,
       bodyPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
-      pageColor: const Color(0xFF2A1E36),
       imagePadding: EdgeInsets.zero,
     );
 
@@ -48,7 +47,6 @@ class _HowItWorksState extends State<HowItWorks> {
       body: SafeArea(
         child: IntroductionScreen(
           key: introKey,
-          globalBackgroundColor: const Color(0xFF2A1E36),
           globalHeader: Align(
             alignment: Alignment.topLeft,
             child: SafeArea(
@@ -69,27 +67,27 @@ class _HowItWorksState extends State<HowItWorks> {
           globalFooter: Container(),
           pages: [
             PageViewModel(
-              title: "How it works",
+              title: "HOW IT WORKS",
               body:
-                  "When you click 'CONNECT & PERFORM' on the home screen, this app connects to a database in the cloud and returns a unique URL. \n\n"
-                      " If a spectator visits this particular URL with their phone, they will be presented with a fake wikipedia website. \n\n"
-                      " At the same time, their phone will be connected to that same database in the cloud.",
-              image: _buildImage('images/logo.png'),
+                  "When you click 'CONNECT & PERFORM' on the home screen, something happens and here you won't find out what exactly. \n\n"
+                      " Why? Because this would reveal the secret and we don't want people on Kickstarter to know how it works. \n\n"
+                      " When you decide to back this project, you will be able to find out how it works and perform this miracle.",
+              image: _buildFullscreenImage(),
               decoration: pageDecoration,
             ),
             PageViewModel(
-              title: "",
+              title: "HOW IT WORKS",
               body:
-                "If they search something, that search-term will be pushed to the database. The same goes for words they select. \n\n"
-                "At the same time, this app receives these words and displays them on the peek-screen of your choosing.",
-              image: _buildImage('images/logo.png'),
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a tellus at nisl lobortis sodales ac non dolor. \n\n"
+                "Vestibulum tincidunt ultrices lectus in gravida. Quisque aliquet nunc arcu.",
+              image: _buildFullscreenImage(),
               decoration: pageDecoration,
             ),
             PageViewModel(
-              title: "",
+              title: "HOW IT WORKS",
               body:
-                "You can try this out yourself and once you get the hang of it, head on over the the 'PERFORMANCE PATTERN' section to learn how to perform this miracle.",
-              image: _buildImage('images/logo.png'),
+                "Proin in facilisis diam. In rutrum sapien nec justo imperdiet auctor. Nam porta, risus sit amet sagittis feugiat.",
+              image: _buildFullscreenImage(),
               footer: ElevatedButton(
                 child: const Text('TAKE ME THERE'),
                 onPressed: () {
@@ -100,7 +98,7 @@ class _HowItWorksState extends State<HowItWorks> {
                   minimumSize:
                   MaterialStateProperty.all(Size(300, 50)),
                   backgroundColor:
-                  MaterialStateProperty.all(Color(0xFF372A43)),
+                  MaterialStateProperty.all(Color(0xFF5E41D4)),
                 ),
               ),
               decoration: pageDecoration,

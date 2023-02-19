@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 String generateRandomString(int len) {
   var r = Random();
-  const _chars = 'abcdefghijklmnopqrstuvwxyz1234567890';
+  const _chars = 'abcdefghijklmnopqrstuvwxyz';
   return List.generate(len, (index) => _chars[r.nextInt(_chars.length)]).join();
 }
 
