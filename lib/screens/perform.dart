@@ -7,6 +7,7 @@ import '../services/auth.dart';
 import 'package:animations/animations.dart';
 import 'perform_display.dart';
 import '../services/database.dart';
+import 'package:wakelock/wakelock.dart';
 
 // class UserPageID extends StatelessWidget {
 //   const UserPageID({Key? key}) : super(key: key);
@@ -39,8 +40,18 @@ class _PerformState extends State<Perform> {
     });
   }
 
+
+  Future<bool> _onWillPop() async {
+    await _auth.signOut();
+    Navigator.pushNamed(context, '/');
+    return true;
+  }
+
+
   Widget PerformHome() {
     //String a = Provider.of<UserPageID>(context).pageid;
+
+    Wakelock.disable();
 
     return Container(
       decoration: const BoxDecoration(
@@ -171,8 +182,7 @@ class _PerformState extends State<Perform> {
               padding: const EdgeInsets.symmetric(horizontal: 72, vertical: 72),
               child: ElevatedButton(
                 onPressed: () async {
-                  await _auth.signOut();
-                  Navigator.pushNamed(context, '/');
+                  _onWillPop();
                 },
                 child: const Text('END SESSION'),
                 style: ButtonStyle(
@@ -197,25 +207,28 @@ class _PerformState extends State<Perform> {
           if (snapshot.hasData) {
             return Scaffold(
               body: SafeArea(
-                child: Container(
-                  child: PageTransitionSwitcher(
-                    duration: const Duration(milliseconds: 300),
-                    reverse: !_isPerforming,
-                    transitionBuilder: (
-                      Widget child,
-                      Animation<double> animation,
-                      Animation<double> secondaryAnimation,
-                    ) {
-                      return SharedAxisTransition(
-                        child: child,
-                        animation: animation,
-                        secondaryAnimation: secondaryAnimation,
-                        transitionType: _transitionType!,
-                      );
-                    },
-                    child: _isPerforming
-                        ? PerformDisplay(toggle: _togglePerformStatus)
-                        : PerformHome(),
+                child: WillPopScope(
+                  onWillPop: _onWillPop,
+                  child: Container(
+                    child: PageTransitionSwitcher(
+                      duration: const Duration(milliseconds: 300),
+                      reverse: !_isPerforming,
+                      transitionBuilder: (
+                        Widget child,
+                        Animation<double> animation,
+                        Animation<double> secondaryAnimation,
+                      ) {
+                        return SharedAxisTransition(
+                          child: child,
+                          animation: animation,
+                          secondaryAnimation: secondaryAnimation,
+                          transitionType: _transitionType!,
+                        );
+                      },
+                      child: _isPerforming
+                          ? PerformDisplay(toggle: _togglePerformStatus)
+                          : PerformHome(),
+                    ),
                   ),
                 ),
               ),

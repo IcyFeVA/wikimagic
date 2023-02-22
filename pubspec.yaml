@@ -44,6 +44,7 @@ dependencies:
   intl: ^0.17.0
   rive: ^0.8.4
   introduction_screen: ^3.0.0
+  wakelock: ^0.6.2
 
 dev_dependencies:
   flutter_test:

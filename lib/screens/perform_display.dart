@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:WikiMagic/helpers/helpers.dart';
 import 'package:provider/provider.dart';
+import 'package:wakelock/wakelock.dart';
 
 class PerformDisplay extends StatefulWidget {
   final Function? toggle;
@@ -25,12 +26,15 @@ class _PerformDisplayState extends State<PerformDisplay> {
   @override
   void initState() {
     super.initState();
+
     _timer = Timer.periodic(Duration(seconds: 5), (_) {
       setState(() {
         hours = DateFormat("hh").format(DateTime.now());
         minutes = DateFormat("mm").format(DateTime.now());
       });
     });
+
+    Wakelock.enable();
   }
 
 
