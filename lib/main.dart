@@ -13,17 +13,21 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:WikiMagic/helpers/helpers.dart';
 import 'package:WikiMagic/screens/howtoperform.dart';
 import 'package:WikiMagic/screens/howitworks.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 
 
 
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
   // final prefs = await SharedPreferences.getInstance();
@@ -37,6 +41,8 @@ void main() async {
         ChangeNotifierProvider(create: (_) => MySelection()),
       ],
       child: MyApp()));
+
+  FlutterNativeSplash.remove();
 }
 
 

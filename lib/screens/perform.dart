@@ -7,7 +7,6 @@ import '../services/auth.dart';
 import 'package:animations/animations.dart';
 import 'perform_display.dart';
 import '../services/database.dart';
-import 'package:wakelock/wakelock.dart';
 
 // class UserPageID extends StatelessWidget {
 //   const UserPageID({Key? key}) : super(key: key);
@@ -50,8 +49,6 @@ class _PerformState extends State<Perform> {
 
   Widget PerformHome() {
     //String a = Provider.of<UserPageID>(context).pageid;
-
-    Wakelock.disable();
 
     return Container(
       decoration: const BoxDecoration(

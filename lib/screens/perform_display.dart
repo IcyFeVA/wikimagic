@@ -40,7 +40,7 @@ class _PerformDisplayState extends State<PerformDisplay> {
 
   @override
   void dispose() {
-    // 5. don't forget to cancel the timer
+    Wakelock.disable();
     _timer.cancel();
     super.dispose();
   }

@@ -45,6 +45,7 @@ dependencies:
   rive: ^0.8.4
   introduction_screen: ^3.0.0
   wakelock: ^0.6.2
+  flutter_native_splash: ^2.1.6
 
 dev_dependencies:
   flutter_test:
