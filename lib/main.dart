@@ -1,5 +1,4 @@
-import 'dart:async';
-
+import 'package:WikiMagic/screens/about.dart';
 import 'package:WikiMagic/screens/perform.dart';
 import 'package:WikiMagic/screens/home.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +6,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'models/user.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:WikiMagic/helpers/helpers.dart';
 import 'package:WikiMagic/screens/howtoperform.dart';
@@ -57,7 +54,8 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/perform': (context) => Perform(),
         '/howitworks': (context) => HowItWorks(),
-        '/howtoperform': (context) => HowToPerform()
+        '/howtoperform': (context) => HowToPerform(),
+        '/about': (context) => About()
       },
       home: Home(),
       theme: ThemeData(
