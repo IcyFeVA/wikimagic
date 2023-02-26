@@ -2,26 +2,26 @@ import 'package:WikiMagic/screens/about.dart';
 import 'package:WikiMagic/screens/perform.dart';
 import 'package:WikiMagic/screens/home.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'firebase_options.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:WikiMagic/helpers/helpers.dart';
 import 'package:WikiMagic/screens/howtoperform.dart';
 import 'package:WikiMagic/screens/howitworks.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 
 
 
 
-void main() async {
+Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
+
+  await Supabase.initialize(
+    url: 'https://qpbuohnkvdddyhwnnost.supabase.co',
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFwYnVvaG5rdmRkZHlod25ub3N0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzczMDg3NzYsImV4cCI6MTk5Mjg4NDc3Nn0.znCOPV0d_zHmT4it8tWB9kJQ7G9L0_KwA1nGc-Z9Mw4',
   );
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);

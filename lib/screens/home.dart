@@ -1,13 +1,6 @@
-import 'package:WikiMagic/services/database.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-import '../services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:WikiMagic/helpers/helpers.dart';
-
-const String VERSION = "0.7 Alpha";
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 
 class Home extends StatefulWidget {
@@ -16,8 +9,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final AuthService _auth = AuthService();
-  DatabaseService? db;
   bool showLoader = false;
 
   @override
@@ -105,44 +96,9 @@ class _HomeState extends State<Home> {
 
                         Container(
                           child: ElevatedButton(
-                            child: Column(children: [
-                              Text('CONNECT & PERFORM'),
-                              Container(
-                                child: Visibility(
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 0, vertical: 8),
-                                      child: SizedBox(
-                                        height: 16,
-                                        width: 16,
-                                        child: CircularProgressIndicator(
-                                            color: Colors.white),
-                                      ),
-                                    ),
-                                    visible: showLoader),
-                              )
-                            ]),
-                            onPressed: () async {
-                              setState(() {
-                                showLoader = true;
-                              });
-                              dynamic result = await _auth.signInAnon();
-                              if (result == null) {
-                                print('error signing in');
-                              } else {
-                                setState(() {
-                                  showLoader = false;
-                                });
-                                context.read<MyUser>().setID(result.uid);
-
-                                String userPageID = generateRandomString(3);
-                                context.read<UserPageID>().setID(userPageID);
-
-                                DatabaseService(uid: result.uid)
-                                    .updateUserData('-', '-', userPageID);
-
+                            child: const Text('CONNECT & PERFORM'),
+                            onPressed: () {
                                 Navigator.pushNamed(context, '/perform');
-                              }
                             },
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
@@ -154,14 +110,18 @@ class _HomeState extends State<Home> {
                         ),
                         Container(
                           padding: const EdgeInsets.only(top: 64),
-                          child: const Text(
-                            VERSION,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Color(0xFFBABABA),
-                                fontSize: 13,
-                                decoration: TextDecoration.none),
-                          ),
+                          child: OutlinedButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/about');
+                            },
+                            style: OutlinedButton.styleFrom(shape: StadiumBorder()),
+                            child: const Text(
+                              "ABOUT",
+                              style: TextStyle(
+                                  color: Colors.white30,
+                                  fontSize: 13),
+                            ),
+                          )
                         )
                       ],
                     ),
