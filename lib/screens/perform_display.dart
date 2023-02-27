@@ -4,7 +4,10 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:WikiMagic/helpers/helpers.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:wakelock/wakelock.dart';
+
+final supabase = Supabase.instance.client;
 
 class PerformDisplay extends StatefulWidget {
   final Function? toggle;
@@ -20,6 +23,8 @@ class _PerformDisplayState extends State<PerformDisplay> {
   late final Timer _timer;
   var hours = DateFormat("hh").format(DateTime.now());
   var minutes = DateFormat("mm").format(DateTime.now());
+
+  final _stream = supabase.from('userdata').stream(primaryKey: ['url']).eq('url', 'dqu').limit(1);
 
   @override
   void initState() {
@@ -44,17 +49,26 @@ class _PerformDisplayState extends State<PerformDisplay> {
   }
 
 
+
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<MyUser>(context);
+    //final user = Provider.of<MyUser>(context);
+
+
 
     return StreamBuilder<List<Map<String, dynamic>>>(
-        stream: null,
+        stream: _stream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
 
             String txt1 = "-";
             String txt2 = "-";
+
+            final data = snapshot.data!.asMap();
+            data.forEach((key, value) {
+              txt1 = value['searchterm'];
+              txt2 = value['focusword'];
+            });
 
             if (txt1 == '-') {
               txt1 = 'Upcoming Alarm';

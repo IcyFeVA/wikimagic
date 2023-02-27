@@ -4,15 +4,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:animations/animations.dart';
 import 'perform_display.dart';
 
-// class UserPageID extends StatelessWidget {
-//   const UserPageID({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     String id = context.watch<UserPageID>().pageid;
-//     return Text(id);
-//   }
-// }
 
 final supabase = Supabase.instance.client;
 
