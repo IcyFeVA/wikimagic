@@ -17,12 +17,12 @@ class UserPageID with ChangeNotifier {
   }
 }
 
-class MyUser with ChangeNotifier {
-  String? _uid;
-  get uid => _uid;
+class MyUrl with ChangeNotifier {
+  String _url = '?';
+  String get url => _url;
 
-  void setID(String newID) {
-    _uid = newID;
+  void setUrl(String newUrl) {
+    _url = newUrl;
     notifyListeners();
   }
 }
@@ -37,12 +37,12 @@ class MySearchTerm with ChangeNotifier {
   }
 }
 
-class MySelection with ChangeNotifier {
-  String _selection = '-';
-  String get selection => _selection;
+class MyFocusword with ChangeNotifier {
+  String _focusword = '-';
+  String get focusword => _focusword;
 
-  void setSelection(String newSelection) {
-    _selection = newSelection;
+  void setSelection(String newFocusword) {
+    _focusword = newFocusword;
     notifyListeners();
   }
 }

@@ -1,8 +1,10 @@
 import 'package:WikiMagic/helpers/helpers.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart' as Pro;
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:animations/animations.dart';
 import 'perform_display.dart';
+import 'package:WikiMagic/helpers/helpers.dart';
 
 
 final supabase = Supabase.instance.client;
@@ -85,6 +87,8 @@ class _PerformState extends State<Perform> {
           final db = snapshot.data!;
 
           String myUrl = generateNewURL(db);
+
+          Pro.Provider.of<MyUrl>(context).setUrl(myUrl);
 
           if (!_readyToPerform) {
             return Container(

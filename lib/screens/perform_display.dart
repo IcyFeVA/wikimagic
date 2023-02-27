@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:WikiMagic/helpers/helpers.dart';
-import 'package:provider/provider.dart';
+import 'package:provider/provider.dart' as Pro;
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:wakelock/wakelock.dart';
 
@@ -52,9 +52,8 @@ class _PerformDisplayState extends State<PerformDisplay> {
 
   @override
   Widget build(BuildContext context) {
-    //final user = Provider.of<MyUser>(context);
-
-
+    MySearchTerm st = Pro.Provider.of<MySearchTerm>(context);
+    MyFocusword fw = Pro.Provider.of<MyFocusword>(context);
 
     return StreamBuilder<List<Map<String, dynamic>>>(
         stream: _stream,
@@ -66,8 +65,8 @@ class _PerformDisplayState extends State<PerformDisplay> {
 
             final data = snapshot.data!.asMap();
             data.forEach((key, value) {
-              txt1 = value['searchterm'];
-              txt2 = value['focusword'];
+              txt1 = st.searchterm;
+              txt2 = fw.focusword;
             });
 
             if (txt1 == '-') {

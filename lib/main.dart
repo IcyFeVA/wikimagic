@@ -33,9 +33,9 @@ Future<void> main() async {
   runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserPageID()),
-        ChangeNotifierProvider(create: (_) => MyUser()),
+        ChangeNotifierProvider(create: (_) => MyUrl()),
         ChangeNotifierProvider(create: (_) => MySearchTerm()),
-        ChangeNotifierProvider(create: (_) => MySelection()),
+        ChangeNotifierProvider(create: (_) => MyFocusword()),
       ],
       child: MyApp()));
 
