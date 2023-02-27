@@ -1,12 +1,8 @@
 import 'package:WikiMagic/helpers/helpers.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../models/user.dart';
-import '../services/auth.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:animations/animations.dart';
 import 'perform_display.dart';
-import '../services/database.dart';
 
 // class UserPageID extends StatelessWidget {
 //   const UserPageID({Key? key}) : super(key: key);
@@ -18,6 +14,9 @@ import '../services/database.dart';
 //   }
 // }
 
+final supabase = Supabase.instance.client;
+
+
 class Perform extends StatefulWidget {
   const Perform({Key? key}) : super(key: key);
 
@@ -26,12 +25,11 @@ class Perform extends StatefulWidget {
 }
 
 class _PerformState extends State<Perform> {
-  final AuthService _auth = AuthService();
-  final DatabaseService _db = DatabaseService();
-  bool _isPerforming = false;
 
-  final SharedAxisTransitionType? _transitionType =
-      SharedAxisTransitionType.horizontal;
+  final Future<dynamic> _future = supabase.from('userdata').select('url');
+
+  bool _isPerforming = false;
+  bool _readyToPerform = false;
 
   void _togglePerformStatus() {
     setState(() {
@@ -41,15 +39,87 @@ class _PerformState extends State<Perform> {
 
 
   Future<bool> _onWillPop() async {
-    await _auth.signOut();
     Navigator.pushNamed(context, '/');
     return true;
   }
 
 
-  Widget PerformHome() {
-    //String a = Provider.of<UserPageID>(context).pageid;
 
+
+
+  Widget urlDisplay() {
+
+    void insertDefaults(url) async {
+      await supabase
+          .from('userdata')
+          .insert({'url': url, 'searchterm': '-', 'focusword': '-'});
+    }
+
+    String generateNewURL(db) {
+
+      bool duplicateFound = false;
+      String genUrl = generateRandomString(3);
+
+      for(var i=0; i<db.length; i++) {
+        if(db[i]['url'] == genUrl) {
+          print('DUPLICATE URL FOUND ' + genUrl);
+          duplicateFound = true;
+        }
+      }
+      if(duplicateFound) {
+        print('GENERATING NEW URL AFTER DUPLICATE WAS FOUND');
+        return generateNewURL(db);
+      } else {
+        print('NEW URL ' + genUrl);
+
+        insertDefaults(genUrl);
+        _readyToPerform = true;
+
+        return genUrl;
+      }
+    }
+
+
+
+
+    return FutureBuilder(
+      future: _future,
+      builder: (context, snapshot) {
+        if (!snapshot.hasData || snapshot.hasError) {
+          return Container(
+            margin: EdgeInsets.only(bottom: 116),
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          final db = snapshot.data!;
+
+          String myUrl = generateNewURL(db);
+
+          if (!_readyToPerform) {
+            return Container(
+              margin: EdgeInsets.only(bottom: 116),
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return Container(
+              margin: EdgeInsets.only(bottom: 128),
+              child: Text(
+                'wima.app/' + myUrl,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.purpleAccent,
+                    fontSize: 16,
+                    decoration: TextDecoration.none),
+              ),
+            );
+          }
+
+        }
+      },
+    );
+  }
+
+  Widget PerformHome() {
     return Container(
       decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -84,17 +154,9 @@ class _PerformState extends State<Perform> {
                   ),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 128),
-                child: Text(
-                  'wima.app/' + Provider.of<UserPageID>(context).pageid,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Colors.purpleAccent,
-                      fontSize: 16,
-                      decoration: TextDecoration.none),
-                ),
-              ),
+
+              urlDisplay(),
+
               Container(
                 margin: EdgeInsets.only(bottom: 20),
                 child: Align(
@@ -194,45 +256,40 @@ class _PerformState extends State<Perform> {
     );
   }
 
+
+
+
+
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<MyUser>(context);
+    return Scaffold(
+      body: SafeArea(
+        child: WillPopScope(
+          onWillPop: _onWillPop,
+          child: Container(
+            child: PageTransitionSwitcher(
+              duration: const Duration(milliseconds: 300),
+              reverse: !_isPerforming,
+              transitionBuilder: (
+                  Widget child,
+                  Animation<double> animation,
+                  Animation<double> secondaryAnimation,
+                  ) {
+                return SharedAxisTransition(
+                  child: child,
+                  animation: animation,
+                  secondaryAnimation: secondaryAnimation,
+                  transitionType: SharedAxisTransitionType.horizontal,
+                );
+              },
+              child: _isPerforming
+                  ? PerformDisplay(toggle: _togglePerformStatus)
+                  : PerformHome(),
+            ),
+          ),
+        ),
+      ),
+    );
 
-    return StreamBuilder<DocumentSnapshot>(
-        stream: DatabaseService(uid: user.uid).userData,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-            return Scaffold(
-              body: SafeArea(
-                child: WillPopScope(
-                  onWillPop: _onWillPop,
-                  child: Container(
-                    child: PageTransitionSwitcher(
-                      duration: const Duration(milliseconds: 300),
-                      reverse: !_isPerforming,
-                      transitionBuilder: (
-                        Widget child,
-                        Animation<double> animation,
-                        Animation<double> secondaryAnimation,
-                      ) {
-                        return SharedAxisTransition(
-                          child: child,
-                          animation: animation,
-                          secondaryAnimation: secondaryAnimation,
-                          transitionType: _transitionType!,
-                        );
-                      },
-                      child: _isPerforming
-                          ? PerformDisplay(toggle: _togglePerformStatus)
-                          : PerformHome(),
-                    ),
-                  ),
-                ),
-              ),
-            );
-          } else {
-            return Container();
-          }
-        });
   }
 }

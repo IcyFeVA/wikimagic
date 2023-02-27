@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:WikiMagic/services/database.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:WikiMagic/helpers/helpers.dart';
@@ -50,15 +48,13 @@ class _PerformDisplayState extends State<PerformDisplay> {
   Widget build(BuildContext context) {
     final user = Provider.of<MyUser>(context);
 
-    return StreamBuilder<DocumentSnapshot>(
-        stream: DatabaseService(uid: user.uid).userData,
+    return StreamBuilder<List<Map<String, dynamic>>>(
+        stream: null,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            final Map<String, dynamic> doc =
-                snapshot.data?.data() as Map<String, dynamic>;
 
-            String txt1 = snapshot.data?.get('searchterm');
-            String txt2 = snapshot.data?.get('selection');
+            String txt1 = "-";
+            String txt2 = "-";
 
             if (txt1 == '-') {
               txt1 = 'Upcoming Alarm';
